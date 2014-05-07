@@ -20,11 +20,11 @@ public class AddCardActivity extends Activity implements View.OnClickListener {
     EditText etPhoneNumber;
     EditText etBalance;
     Button btnCreateCard;
+    Button btnFromMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_add_card);
 
         initControls();
@@ -36,17 +36,30 @@ public class AddCardActivity extends Activity implements View.OnClickListener {
         etBalance = (EditText)findViewById(R.id.etBalance);
         btnCreateCard = (Button)findViewById(R.id.btnCreateCard);
         btnCreateCard.setOnClickListener(this);
+        btnFromMessages = (Button)findViewById(R.id.btnFromMessages);
+        btnFromMessages.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnCreateCard:
+                createCard();
+                break;
+            case R.id.btnFromMessages:
+                openFromMessagesDialog();
+                break;
+        }
+    }
+
+    private void createCard(){
         if (etTitle.length() == 0){
-            Toast.makeText(this, R.string.title_card_validation_msg, Toast.LENGTH_LONG);
+            Toast.makeText(this, R.string.title_card_validation_msg, Toast.LENGTH_LONG).show();
             return;
         }
 
         if (etPhoneNumber.length() == 0){
-            Toast.makeText(this, R.string.phone_number_card_validation_msg, Toast.LENGTH_LONG);
+            Toast.makeText(this, R.string.phone_number_card_validation_msg, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -57,5 +70,23 @@ public class AddCardActivity extends Activity implements View.OnClickListener {
 
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private void openFromMessagesDialog(){
+        Intent intent = new Intent(this, MessagesPhoneNumbersActivity.class);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null){
+            return;
+        }
+
+        if (resultCode != RESULT_OK){
+            return;
+        }
+
+        etPhoneNumber.setText(data.getStringExtra("address"));
     }
 }

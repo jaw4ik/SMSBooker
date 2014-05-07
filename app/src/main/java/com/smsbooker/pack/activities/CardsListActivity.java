@@ -1,7 +1,6 @@
 package com.smsbooker.pack.activities;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,11 +10,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.smsbooker.pack.R;
-import com.smsbooker.pack.cards.CardsAdapter;
+import com.smsbooker.pack.adapters.CardsAdapter;
 import com.smsbooker.pack.models.Card;
 import com.smsbooker.pack.repositories.CardsRepository;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CardsListActivity extends ActionBarActivity implements View.OnClickListener {

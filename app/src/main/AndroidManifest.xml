@@ -28,6 +28,10 @@
             android:name=".activities.AddCardActivity"
             android:label="@string/title_activity_add_card">
         </activity>
+        <activity
+            android:name=".activities.MessagesPhoneNumbersActivity"
+            android:label="@string/title_activity_messages_phone_numbers">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.READ_SMS" />

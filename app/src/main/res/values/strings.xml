@@ -6,6 +6,7 @@
     <string name="title_activity_home">SMS Booker</string>
     <string name="title_activity_cards_list">Список карт</string>
     <string name="title_activity_add_card">Добаление новой карты</string>
+    <string name="title_activity_messages_phone_numbers">Выберите отправителя сообщений</string>
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
