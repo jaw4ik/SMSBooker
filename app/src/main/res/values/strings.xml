@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SMSBooker</string>
+    <string name="app_name">SMS Booker</string>
+
     <string name="title_activity_home">SMS Booker</string>
+    <string name="title_activity_cards_list">Список карт</string>
+    <string name="title_activity_add_card">Добаление новой карты</string>
+
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="action_settings">Настройки</string>
+    <string name="add_card">Добавить карту</string>
+    <string name="card_title">Название карты</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="from_sms">Из CMC</string>
+    <string name="current_balance">Текущий баланс</string>
+    <string name="create_card">Создать карту</string>
+
+    <string name="title_card_validation_msg">Название карты не может быть пустым</string>
+    <string name="phone_number_card_validation_msg">Нужно заполнить номер телефона с которого приходят СМС от банка</string>
+    <string name="balance_title">Баланс:</string>
 
 </resources>

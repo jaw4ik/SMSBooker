@@ -23,6 +23,20 @@ public class DBManager {
         dbHelper = new DBHelper(context, DB_NAME, dbVersion, this);
     }
 
+    public SQLiteDatabase getDB(){
+        if (db == null){
+            db = dbHelper.getWritableDatabase();
+        }
+        return db;
+    }
+
+    public void close(){
+        if (db != null) {
+            db.close();
+            db = null;
+        }
+    }
+
     public void updateDB(SQLiteDatabase db, int fromVersion){
         migrationsManager.update(db, fromVersion);
     }

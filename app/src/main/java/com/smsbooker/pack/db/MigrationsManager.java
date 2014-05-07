@@ -2,7 +2,7 @@ package com.smsbooker.pack.db;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.smsbooker.pack.db.migrations.Migration1_CreateDB;
+import com.smsbooker.pack.db.migrations.Migration1_CreateCardTable;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class MigrationsManager {
     private ArrayList<IMigration> migrationsList = new ArrayList<IMigration>();
 
     public int init(){
-        addMigration(new Migration1_CreateDB());
+        addMigration(new Migration1_CreateCardTable());
 
         return migrationsList.size();
     }

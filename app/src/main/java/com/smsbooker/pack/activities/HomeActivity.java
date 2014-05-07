@@ -1,6 +1,5 @@
 package com.smsbooker.pack.activities;
 
-import com.smsbooker.pack.db.DBManager;
 import com.smsbooker.pack.activities.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -10,8 +9,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
 import com.smsbooker.pack.R;
-import com.smsbooker.pack.sms.SmsManager;
+import com.smsbooker.pack.models.Message;
+import com.smsbooker.pack.messages.MessagesManager;
+
+import java.util.ArrayList;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -47,6 +53,8 @@ public class HomeActivity extends Activity {
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
+
+    private ListView lvMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +124,20 @@ public class HomeActivity extends Activity {
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
-        SmsManager sms = new SmsManager(this);
-        sms.ReadMessages();
+        /*lvMessages = (ListView)findViewById(R.id.lvMessages);
+        if (lvMessages == null){
+            return;
+        }
+
+        MessagesManager sms = new MessagesManager(this);
+        ArrayList<Message> messages = sms.ReadMessages();
+
+        //ArrayAdapter<Message> adapter = new ArrayAdapter<Message>(this, android.R.layout.simple_list_item_1, messages);
+        String[] from = {"messageBody", "fromAddress", "timestamp"};
+        int[] to = {R.id.tvName, R.id.tvPhoneAddress, R.id.tvBalance};
+        SimpleAdapter adapter = new SimpleAdapter(this, messages, R.layout.card_item, from, to);
+
+        lvMessages.setAdapter(adapter);*/
     }
 
     @Override
