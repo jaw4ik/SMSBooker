@@ -24,6 +24,6 @@ public class Message {
 
     @Override
     public String toString(){
-        return "ID("+ this.id + ") " + this.fromAddress + "\n[" + this.messageBody + "]";
+        return this.messageBody;
     }
 }

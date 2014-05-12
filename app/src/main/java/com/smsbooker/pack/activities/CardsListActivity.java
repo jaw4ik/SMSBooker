@@ -3,13 +3,16 @@ package com.smsbooker.pack.activities;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.smsbooker.pack.R;
+import com.smsbooker.pack.activities.addcard.AddCardFirstStepActivity;
 import com.smsbooker.pack.adapters.CardsAdapter;
 import com.smsbooker.pack.models.Card;
 import com.smsbooker.pack.repositories.CardsRepository;
@@ -17,6 +20,8 @@ import com.smsbooker.pack.repositories.CardsRepository;
 import java.util.ArrayList;
 
 public class CardsListActivity extends ActionBarActivity implements View.OnClickListener {
+
+    final int CM_DELETE_CARD = 1;
 
     ListView lvCards;
     CardsAdapter adapter;
@@ -40,6 +45,27 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
         cardsList = cardsRepository.getAll();
         adapter = new CardsAdapter(this, cardsList);
         lvCards.setAdapter(adapter);
+
+        registerForContextMenu(lvCards);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0, CM_DELETE_CARD, 0, R.string.delete_card);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case CM_DELETE_CARD:
+                AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+                deleteCard(acmi.position);
+                break;
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -65,7 +91,7 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnAddCard:
-                Intent intent = new Intent(this, AddCardActivity.class);
+                Intent intent = new Intent(this, AddCardFirstStepActivity.class);
                 startActivityForResult(intent, 0);
                 break;
         }
@@ -81,9 +107,20 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
             return;
         }
 
-        Card card = new Card(data.getBundleExtra("card"));
+        addCard(new Card(data.getBundleExtra("card")));
+    }
+
+    private void addCard(Card card){
         cardsRepository.add(card);
         cardsList.add(card);
+
+        adapter.notifyDataSetChanged();
+    }
+
+    private void deleteCard(int position){
+        Card cardToDelete = cardsList.get(position);
+        cardsRepository.delete(cardToDelete.id);
+        cardsList.remove(position);
 
         adapter.notifyDataSetChanged();
     }

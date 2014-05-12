@@ -7,17 +7,14 @@ import android.net.Uri;
 import com.smsbooker.pack.models.Message;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Yuriy on 07.05.2014.
  */
 public class MessagesRepository {
 
-    private static class VarNames{
+    private static class ColumnsNames {
         public static String id = "_id";
         public static String threadId = "thread_id";
         public static String address = "address";
@@ -29,7 +26,7 @@ public class MessagesRepository {
     final Uri SMS_CONTENT_URI = Uri.parse("content://sms");
     final Uri SMS_INBOX_CONTENT_URI = Uri.withAppendedPath(SMS_CONTENT_URI, "inbox");
 
-    final String[] projection = new String[] { VarNames.id, VarNames.threadId, VarNames.address, VarNames.date, VarNames.body, VarNames.isRead };
+    final String[] projection = new String[] { ColumnsNames.id, ColumnsNames.threadId, ColumnsNames.address, ColumnsNames.date, ColumnsNames.body, ColumnsNames.isRead };
     final String sortOrder = "date";
 
     Context context;
@@ -48,17 +45,19 @@ public class MessagesRepository {
 
         do{
             Message message = new Message(
-                cursor.getLong(cursor.getColumnIndex(VarNames.id)),
-                cursor.getLong(cursor.getColumnIndex(VarNames.threadId)),
-                cursor.getString(cursor.getColumnIndex(VarNames.address)),
-                cursor.getString(cursor.getColumnIndex(VarNames.body)),
-                cursor.getLong(cursor.getColumnIndex(VarNames.date)),
-                cursor.getString(cursor.getColumnIndex(VarNames.isRead)).equalsIgnoreCase("1")
+                cursor.getLong(cursor.getColumnIndex(ColumnsNames.id)),
+                cursor.getLong(cursor.getColumnIndex(ColumnsNames.threadId)),
+                cursor.getString(cursor.getColumnIndex(ColumnsNames.address)),
+                cursor.getString(cursor.getColumnIndex(ColumnsNames.body)),
+                cursor.getLong(cursor.getColumnIndex(ColumnsNames.date)),
+                cursor.getString(cursor.getColumnIndex(ColumnsNames.isRead)).equalsIgnoreCase("1")
             );
             messages.add(message);
         } while (cursor.moveToNext());
 
         cursor.close();
+
+        Collections.reverse(messages);
 
         return messages;
     }
@@ -74,7 +73,6 @@ public class MessagesRepository {
         ArrayList<Message> messagesChain = new ArrayList<Message>();
 
         ArrayList<Message> allMessages = getAll();
-        Collections.reverse(allMessages);
         for (Message message : allMessages){
             if (!messagesChainAddresses.contains(message.fromAddress)){
                 messagesChain.add(message);
@@ -83,5 +81,11 @@ public class MessagesRepository {
         }
 
         return messagesChain;
+    }
+
+    public ArrayList<Message> getMessagesByAddress(String address){
+        Cursor cursor = context.getContentResolver().query(SMS_INBOX_CONTENT_URI, projection, ColumnsNames.address + " = ?", new String[] { address }, sortOrder);
+
+        return getFromCursor(cursor);
     }
 }

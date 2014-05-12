@@ -13,14 +13,24 @@
 
     <string name="action_settings">Настройки</string>
     <string name="add_card">Добавить карту</string>
-    <string name="card_title">Название карты</string>
-    <string name="phone_number">Номер телефона</string>
-    <string name="from_sms">Из CMC</string>
+    <string name="choose">Выбрать</string>
     <string name="current_balance">Текущий баланс</string>
     <string name="create_card">Создать карту</string>
+    <string name="delete_card">Удалить карту</string>
 
     <string name="title_card_validation_msg">Название карты не может быть пустым</string>
     <string name="phone_number_card_validation_msg">Нужно заполнить номер телефона с которого приходят СМС от банка</string>
+    <string name="no_messages_validation_msg">По указаному номеру не найдено сообщений</string>
+
     <string name="balance_title">Баланс:</string>
+    <string name="continue_str">Продолжить -></string>
+    <string name="first_step">Шаг 1</string>
+    <string name="second_step">Шаг 2</string>
+    <string name="third_step">Шаг 3</string>
+
+    <string name="card_title_description">Придумайте название для вашей карты:</string>
+    <string name="phone_number_description">Выберите номер телефона, с которого приходят сообщения по данной карте:</string>
+    <string name="select_message_description">Выберите сообщение с информацией о изменении баланса:</string>
+    <string name="select_balance_changing_description">Укажите область с информацией о балансе по данной карте:</string>
 
 </resources>

@@ -25,7 +25,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AddCardActivity"
+            android:name=".activities.addcard.AddCardFirstStepActivity"
+            android:label="@string/title_activity_add_card">
+        </activity>
+        <activity
+            android:name=".activities.addcard.AddCardSecondStepActivity"
+            android:label="@string/title_activity_add_card">
+        </activity>
+        <activity
+            android:name=".activities.addcard.AddCardThirdStepActivity"
             android:label="@string/title_activity_add_card">
         </activity>
         <activity
@@ -35,7 +43,5 @@
     </application>
 
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-
 
 </manifest>
