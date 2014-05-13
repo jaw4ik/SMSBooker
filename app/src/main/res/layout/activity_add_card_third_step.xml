@@ -22,4 +22,11 @@
         android:text="@string/select_balance_changing_description"
         android:id="@+id/textView2"
         android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:id="@+id/llParsedMessageBody"></LinearLayout>
 </LinearLayout>
