@@ -17,6 +17,7 @@
     <string name="current_balance">Текущий баланс</string>
     <string name="create_card">Создать карту</string>
     <string name="delete_card">Удалить карту</string>
+    <string name="edit_card">Редактировать карту</string>
 
     <string name="title_card_validation_msg">Название карты не может быть пустым</string>
     <string name="phone_number_card_validation_msg">Нужно заполнить номер телефона с которого приходят СМС от банка</string>

@@ -79,4 +79,19 @@ public class CardsRepository {
 
         dbManager.close();
     }
+
+    public void update(Card card){
+        SQLiteDatabase db = dbManager.getDB();
+
+        ContentValues values = new ContentValues();
+
+        values.put(ColumnsNames.code, card.code);
+        values.put(ColumnsNames.name, card.name);
+        values.put(ColumnsNames.phoneAddress, card.phoneAddress);
+        values.put(ColumnsNames.balance, card.balance);
+
+        db.update(TABLE_NAME,values,ColumnsNames.id + " = ?", new String[] {Integer.toString(card.id)});
+
+        dbManager.close();
+    }
 }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class CardsListActivity extends ActionBarActivity implements View.OnClickListener {
 
     final int CM_DELETE_CARD = 1;
+    final int CM_EDIT_CARD = 2;
 
     ListView lvCards;
     CardsAdapter adapter;
@@ -54,6 +55,7 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
         super.onCreateContextMenu(menu, v, menuInfo);
 
         menu.add(0, CM_DELETE_CARD, 0, R.string.delete_card);
+        menu.add(0, CM_EDIT_CARD, 0, R.string.edit_card);
     }
 
     @Override
@@ -62,6 +64,10 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
             case CM_DELETE_CARD:
                 AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
                 deleteCard(acmi.position);
+                break;
+           case CM_EDIT_CARD:
+                acmi = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+                updateCard(acmi.position);
                 break;
         }
 
@@ -121,6 +127,15 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
         Card cardToDelete = cardsList.get(position);
         cardsRepository.delete(cardToDelete.id);
         cardsList.remove(position);
+
+        adapter.notifyDataSetChanged();
+    }
+
+    private void updateCard(int position){
+        Card card = cardsList.get(position);
+        cardsRepository.update(card);
+        cardsList.remove(card);
+        cardsList.add(card);
 
         adapter.notifyDataSetChanged();
     }
