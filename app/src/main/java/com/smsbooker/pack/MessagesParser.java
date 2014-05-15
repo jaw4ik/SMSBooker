@@ -38,4 +38,56 @@ public class MessagesParser {
         return messageParts;
     }
 
+    public String getPreviousPartText(ArrayList<MessagePart> messageParts, int partIndex){
+        if (partIndex > 0){
+            int currentPartIndex = partIndex - 1;
+            do{
+                MessagePart part = messageParts.get(currentPartIndex);
+                if (!part.isNumber){
+                    return part.value;
+                }
+                currentPartIndex--;
+            } while (currentPartIndex >= 0);
+        }
+        return null;
+    }
+
+    public String getNextPartText(ArrayList<MessagePart> messageParts, int partIndex){
+        int messagePartsCount = messageParts.size();
+        if (partIndex < messagePartsCount - 1){
+            int currentPartIndex = partIndex + 1;
+            do{
+                MessagePart part = messageParts.get(currentPartIndex);
+                if (!part.isNumber){
+                    return part.value;
+                }
+                currentPartIndex++;
+            } while (currentPartIndex < messagePartsCount);
+        }
+        return null;
+    }
+
+    public String getPatternValue(String message, String previousText, String nextText){
+        ArrayList<MessagePart> messageParts = parseMessage(message);
+        int messagePartsCount = messageParts.size();
+        for (int index = 1; index < messagePartsCount; index++){
+            MessagePart
+                previousPart = messageParts.get(index - 1),
+                currentPart = messageParts.get(index);
+
+            if (!previousPart.value.equalsIgnoreCase(previousText)){
+                continue;
+            }
+
+            if (index + 1 == messagePartsCount && nextText == null){
+                return currentPart.value;
+            }
+
+            MessagePart nextPart = messageParts.get(index + 1);
+            if (index + 1 > messagePartsCount && nextText != null && currentPart.isNumber && nextPart.value == nextText){
+                return currentPart.value;
+            }
+        }
+        return null;
+    }
 }

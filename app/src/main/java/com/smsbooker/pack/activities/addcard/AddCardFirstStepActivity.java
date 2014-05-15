@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.smsbooker.pack.R;
 import com.smsbooker.pack.activities.MessagesPhoneNumbersActivity;
+import com.smsbooker.pack.models.Card;
 
 /**
  * Created by Yuriy on 11.05.2014.
@@ -95,9 +96,20 @@ public class AddCardFirstStepActivity extends Activity implements View.OnClickLi
                 Toast.makeText(this, R.string.no_messages_validation_msg, Toast.LENGTH_LONG).show();
                 break;
             case RESULT_OK:
+                Card card = new Card(data.getBundleExtra("card"));
+                data.putExtra("card", fillCard(card).toBundle());
 
+                setResult(RESULT_OK, data);
+                finish();
                 break;
         }
+    }
+
+    private Card fillCard(Card card){
+        card.name = etTitle.getText().toString();
+        card.phoneAddress = etPhoneNumber.getText().toString();
+
+        return card;
     }
 
     @Override

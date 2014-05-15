@@ -22,6 +22,7 @@
     <string name="title_card_validation_msg">Название карты не может быть пустым</string>
     <string name="phone_number_card_validation_msg">Нужно заполнить номер телефона с которого приходят СМС от банка</string>
     <string name="no_messages_validation_msg">По указаному номеру не найдено сообщений</string>
+    <string name="invalid_value_selected_validation_msg">Необходимо указать область с информацией о балансе по данной карте</string>
 
     <string name="balance_title">Баланс:</string>
     <string name="continue_str">Продолжить -></string>
@@ -33,5 +34,10 @@
     <string name="phone_number_description">Выберите номер телефона, с которого приходят сообщения по данной карте:</string>
     <string name="select_message_description">Выберите сообщение с информацией о изменении баланса:</string>
     <string name="select_balance_changing_description">Укажите область с информацией о балансе по данной карте:</string>
+
+    <string name="invalid_value">Выбрано неверное значение</string>
+
+    <string name="selected_value">Выбранное значение:</string>
+    <string name="finish">Завершить</string>
 
 </resources>

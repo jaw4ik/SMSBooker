@@ -24,6 +24,8 @@ public class CardsRepository {
         public static String name = "name";
         public static String phoneAddress = "phoneAddress";
         public static String balance = "balance";
+        public static String previousPattern = "previousPattern";
+        public static String nextPattern = "nextPattern";
     }
 
     DBManager dbManager;
@@ -42,11 +44,13 @@ public class CardsRepository {
             if (cursor != null && cursor.moveToFirst()){
                 do{
                     cards.add(new Card(
-                            cursor.getInt(cursor.getColumnIndex(ColumnsNames.id)),
-                            cursor.getString(cursor.getColumnIndex(ColumnsNames.code)),
-                            cursor.getString(cursor.getColumnIndex(ColumnsNames.name)),
-                            cursor.getString(cursor.getColumnIndex(ColumnsNames.phoneAddress)),
-                            cursor.getFloat(cursor.getColumnIndex(ColumnsNames.balance))
+                        cursor.getInt(cursor.getColumnIndex(ColumnsNames.id)),
+                        cursor.getString(cursor.getColumnIndex(ColumnsNames.code)),
+                        cursor.getString(cursor.getColumnIndex(ColumnsNames.name)),
+                        cursor.getString(cursor.getColumnIndex(ColumnsNames.phoneAddress)),
+                        cursor.getFloat(cursor.getColumnIndex(ColumnsNames.balance)),
+                        cursor.getString(cursor.getColumnIndex(ColumnsNames.previousPattern)),
+                        cursor.getString(cursor.getColumnIndex(ColumnsNames.nextPattern))
                     ));
                 } while (cursor.moveToNext());
             }
@@ -66,6 +70,8 @@ public class CardsRepository {
         values.put(ColumnsNames.name, card.name);
         values.put(ColumnsNames.phoneAddress, card.phoneAddress);
         values.put(ColumnsNames.balance, card.balance);
+        values.put(ColumnsNames.previousPattern, card.pattern.previousText);
+        values.put(ColumnsNames.nextPattern, card.pattern.nextText);
 
         db.insert(TABLE_NAME, null, values);
 

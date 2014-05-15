@@ -10,11 +10,11 @@ import com.smsbooker.pack.db.IMigration;
 public class Migration1_CreateCardTable implements IMigration {
     @Override
     public void update(SQLiteDatabase db) {
-        db.execSQL("create table cards (" +
-                "id integer primary key autoincrement," +
-                "code text," +
-                "name text," +
-                "phoneAddress text," +
-                "balance float )");
+        db.execSQL("CREATE TABLE cards (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "code TEXT," +
+                "name TEXT," +
+                "phoneAddress TEXT," +
+                "balance FLOAT )");
     }
 }

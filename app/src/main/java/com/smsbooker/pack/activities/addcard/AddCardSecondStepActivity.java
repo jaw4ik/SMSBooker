@@ -9,7 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.smsbooker.pack.MessagesParser;
 import com.smsbooker.pack.R;
+import com.smsbooker.pack.models.Card;
 import com.smsbooker.pack.models.Message;
 import com.smsbooker.pack.repositories.MessagesRepository;
 
@@ -82,5 +84,30 @@ public class AddCardSecondStepActivity extends Activity implements AdapterView.O
 
         Bundle animationBundle = ActivityOptions.makeCustomAnimation(this, R.anim.slide_left_in, R.anim.slide_left_out).toBundle();
         startActivityForResult(intent, 0, animationBundle);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK){
+            return;
+        }
+
+        Card card = new Card(data.getBundleExtra("card"));
+
+        MessagesParser parser = new MessagesParser();
+
+        String balanceValue;
+        for (Message message : messagesList){
+            balanceValue = parser.getPatternValue(message.messageBody, card.pattern.previousText, card.pattern.nextText);
+            if (balanceValue != null){
+                card.balance = Float.parseFloat(balanceValue.replace(',', '.'));
+                break;
+            }
+        }
+
+        data.putExtra("card", card.toBundle());
+
+        setResult(RESULT_OK, data);
+        finish();
     }
 }

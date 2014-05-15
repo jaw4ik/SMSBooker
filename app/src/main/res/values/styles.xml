@@ -23,4 +23,13 @@
 
     <style name="ButtonBarButton" />
 
+    <style name="messagePartButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="messagePartText">
+        <item name="android:textSize">15dp</item>
+    </style>
+
 </resources>

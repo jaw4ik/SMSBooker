@@ -3,6 +3,7 @@ package com.smsbooker.pack.db;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.smsbooker.pack.db.migrations.Migration1_CreateCardTable;
+import com.smsbooker.pack.db.migrations.Migration2_AddColumnsToCardTable;
 
 import java.util.ArrayList;
 
@@ -15,13 +16,19 @@ public class MigrationsManager {
 
     public int init(){
         addMigration(new Migration1_CreateCardTable());
+        addMigration(new Migration2_AddColumnsToCardTable());
 
         return migrationsList.size();
     }
 
     public void update(SQLiteDatabase db, int fromVersion){
         for (int i = fromVersion; i < migrationsList.size(); i++){
-            migrationsList.get(i).update(db);
+            db.beginTransaction();
+            try {
+                migrationsList.get(i).update(db);
+                db.setTransactionSuccessful();
+            } catch (Exception e){}
+            db.endTransaction();
         }
     }
 
