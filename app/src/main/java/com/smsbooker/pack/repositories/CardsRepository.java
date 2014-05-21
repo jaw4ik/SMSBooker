@@ -66,12 +66,12 @@ public class CardsRepository {
         SQLiteDatabase db = dbManager.getDB();
         ContentValues values = new ContentValues();
 
-        values.put(ColumnsNames.code, card.code);
-        values.put(ColumnsNames.name, card.name);
-        values.put(ColumnsNames.phoneAddress, card.phoneAddress);
-        values.put(ColumnsNames.balance, card.balance);
-        values.put(ColumnsNames.previousPattern, card.pattern.previousText);
-        values.put(ColumnsNames.nextPattern, card.pattern.nextText);
+        values.put("code", card.code);
+        values.put("name", card.name);
+        values.put("phoneAddress", card.phoneAddress);
+        values.put("balance", card.balance);
+        values.put("previousPattern", card.pattern.previousText);
+        values.put("nextPattern", card.pattern.nextText);
 
         db.insert(TABLE_NAME, null, values);
 

@@ -15,6 +15,8 @@ public class Migration1_CreateCardTable implements IMigration {
                 "code TEXT," +
                 "name TEXT," +
                 "phoneAddress TEXT," +
-                "balance FLOAT )");
+                "balance FLOAT," +
+                "previousPattern TEXT," +
+                "nextPattern TEXT )");
     }
 }

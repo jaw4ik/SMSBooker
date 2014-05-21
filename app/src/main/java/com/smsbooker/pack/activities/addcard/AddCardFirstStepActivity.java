@@ -91,18 +91,15 @@ public class AddCardFirstStepActivity extends Activity implements View.OnClickLi
     }
 
     private void secondStepHandler(int resultCode, Intent data){
-        switch (resultCode){
-            case RESULT_CANCELED:
-                Toast.makeText(this, R.string.no_messages_validation_msg, Toast.LENGTH_LONG).show();
-                break;
-            case RESULT_OK:
-                Card card = new Card(data.getBundleExtra("card"));
-                data.putExtra("card", fillCard(card).toBundle());
-
-                setResult(RESULT_OK, data);
-                finish();
-                break;
+        if (resultCode != RESULT_OK){
+            return;
         }
+
+        Card card = new Card(data.getBundleExtra("card"));
+        data.putExtra("card", fillCard(card).toBundle());
+
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     private Card fillCard(Card card){

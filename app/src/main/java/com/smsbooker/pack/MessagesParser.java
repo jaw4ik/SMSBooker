@@ -3,6 +3,8 @@ package com.smsbooker.pack;
 import com.smsbooker.pack.models.MessagePart;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +15,7 @@ import java.util.regex.Pattern;
 public class MessagesParser {
 
     final String GET_NUMBERS_REGEX = "[+-]?\\d+([,.]\\d+)?";
+    final String SPLIT_INTO_WORDS_REGEX = "[\\S\\s][\\w']*[\\S\\s]";
 
     public ArrayList<MessagePart> parseMessage(String message){
         Pattern pattern = Pattern.compile(GET_NUMBERS_REGEX);
@@ -23,11 +26,11 @@ public class MessagesParser {
         int lastParsedIndex = -1;
         while (mt.find()){
             if (messageParts.size() == 0 && mt.start() != 0){
-                messageParts.add(new MessagePart(false, message.substring(0, mt.start())));
+                splitAndCreateParts(message.substring(0, mt.start()), messageParts);
             }
 
             if (lastParsedIndex != -1 && lastParsedIndex < mt.start()){
-                messageParts.add(new MessagePart(false, message.substring(lastParsedIndex, mt.start())));
+                splitAndCreateParts(message.substring(lastParsedIndex, mt.start()), messageParts);
             }
 
             messageParts.add(new MessagePart(true, message.substring(mt.start(), mt.end())));
@@ -36,6 +39,15 @@ public class MessagesParser {
         }
 
         return messageParts;
+    }
+
+    private void splitAndCreateParts(String text, ArrayList<MessagePart> messageParts){
+        Pattern pattern = Pattern.compile(SPLIT_INTO_WORDS_REGEX);
+        Matcher matcher = pattern.matcher(text);
+
+        while (matcher.find()){
+            messageParts.add(new MessagePart(false, text.substring(matcher.start(), matcher.end())));
+        }
     }
 
     public String getPreviousPartText(ArrayList<MessagePart> messageParts, int partIndex){
@@ -84,7 +96,7 @@ public class MessagesParser {
             }
 
             MessagePart nextPart = messageParts.get(index + 1);
-            if (index + 1 > messagePartsCount && nextText != null && currentPart.isNumber && nextPart.value == nextText){
+            if (currentPart.isNumber && nextPart.value.equalsIgnoreCase(nextText)){
                 return currentPart.value;
             }
         }

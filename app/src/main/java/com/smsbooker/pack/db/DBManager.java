@@ -32,9 +32,9 @@ public class DBManager {
 
     public void close(){
         if (db != null) {
-            db.close();
             db = null;
         }
+        dbHelper.close();
     }
 
     public void updateDB(SQLiteDatabase db, int fromVersion){

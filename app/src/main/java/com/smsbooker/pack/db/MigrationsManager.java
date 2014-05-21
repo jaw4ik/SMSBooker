@@ -16,19 +16,14 @@ public class MigrationsManager {
 
     public int init(){
         addMigration(new Migration1_CreateCardTable());
-        addMigration(new Migration2_AddColumnsToCardTable());
+        //addMigration(new Migration2_AddColumnsToCardTable());
 
         return migrationsList.size();
     }
 
     public void update(SQLiteDatabase db, int fromVersion){
         for (int i = fromVersion; i < migrationsList.size(); i++){
-            db.beginTransaction();
-            try {
-                migrationsList.get(i).update(db);
-                db.setTransactionSuccessful();
-            } catch (Exception e){}
-            db.endTransaction();
+            migrationsList.get(i).update(db);
         }
     }
 

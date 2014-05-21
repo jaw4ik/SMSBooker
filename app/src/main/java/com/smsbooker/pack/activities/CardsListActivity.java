@@ -1,6 +1,11 @@
 package com.smsbooker.pack.activities;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -41,7 +46,7 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
         btnAddCard.setOnClickListener(this);
 
         lvCards = (ListView)findViewById(R.id.lvCards);
-        cardsRepository = new CardsRepository(getBaseContext());
+        cardsRepository = new CardsRepository(this);
 
         cardsList = cardsRepository.getAll();
         adapter = new CardsAdapter(this, cardsList);
