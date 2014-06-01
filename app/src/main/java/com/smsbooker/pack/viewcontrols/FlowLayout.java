@@ -1,4 +1,4 @@
-package com.smsbooker.pack.viewcontrols;
+package com.smsbooker.pack.viewControls;
 
 import android.content.Context;
 import android.content.res.TypedArray;

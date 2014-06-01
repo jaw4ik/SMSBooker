@@ -14,29 +14,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/third_step"
-        android:id="@+id/textView" />
+        android:text="@string/fifth_step" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/select_balance_changing_description"
-        android:id="@+id/textView2"
+        android:text="@string/select_quantity_changing_description"
         android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="300dp">
 
-        <com.smsbooker.pack.viewcontrols.FlowLayout
+        <com.smsbooker.pack.viewControls.FlowLayout
             android:id="@+id/flParsedMessageBody"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             app:paddingV="5">
 
-        </com.smsbooker.pack.viewcontrols.FlowLayout>
+        </com.smsbooker.pack.viewControls.FlowLayout>
 
     </ScrollView>
 
@@ -50,11 +48,11 @@
             android:layout_height="wrap_content"
             android:phoneNumber="false"
             android:text="@string/selected_value"
-            android:layout_below="@+id/etBalance"
-            android:layout_alignBaseline="@+id/etBalance" />
+            android:layout_below="@+id/etQuantity"
+            android:layout_alignBaseline="@+id/etQuantity" />
 
         <EditText
-            android:id="@+id/etBalance"
+            android:id="@+id/etQuantity"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/textView3"
@@ -66,8 +64,8 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/finish"
-        android:id="@+id/btnFinish"
+        android:text="@string/continue_str"
+        android:id="@+id/btnContinue"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

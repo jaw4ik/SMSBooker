@@ -6,7 +6,7 @@
     <string name="title_activity_home">SMS Booker</string>
     <string name="title_activity_cards_list">Список карт</string>
     <string name="title_activity_add_card">Добаление новой карты</string>
-    <string name="title_activity_messages_phone_numbers">Выберите отправителя сообщений</string>
+    <string name="title_activity_add_card_pattern">Добаление нового шаблона сообщений</string>
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -18,26 +18,40 @@
     <string name="create_card">Создать карту</string>
     <string name="delete_card">Удалить карту</string>
     <string name="edit_card">Редактировать карту</string>
+    <string name="delete_pattern">Удалить шаблон</string>
 
     <string name="title_card_validation_msg">Название карты не может быть пустым</string>
-    <string name="phone_number_card_validation_msg">Нужно заполнить номер телефона с которого приходят СМС от банка</string>
+    <string name="empty_card_patterns_validation_msg">Нужно создать хотя бы один шаблон сообщений</string>
     <string name="no_messages_validation_msg">По указаному номеру не найдено сообщений</string>
     <string name="invalid_value_selected_validation_msg">Необходимо указать область с информацией о балансе по данной карте</string>
+    <string name="no_value_checked_validation_msg">Необходимо выбрать тип карты</string>
+    <string name="no_checkword_selected_validation_msg">Необходимо выбрать проверочное слово</string>
 
     <string name="balance_title">Баланс:</string>
     <string name="continue_str">Продолжить -></string>
     <string name="first_step">Шаг 1</string>
     <string name="second_step">Шаг 2</string>
     <string name="third_step">Шаг 3</string>
+    <string name="fourth_step">Шаг 4</string>
+    <string name="fifth_step">Шаг 5</string>
+    <string name="sixth_step">Шаг 6</string>
 
-    <string name="card_title_description">Придумайте название для вашей карты:</string>
-    <string name="phone_number_description">Выберите номер телефона, с которого приходят сообщения по данной карте:</string>
-    <string name="select_message_description">Выберите сообщение с информацией о изменении баланса:</string>
-    <string name="select_balance_changing_description">Укажите область с информацией о балансе по данной карте:</string>
+    <string name="card_title_description">Придумайте <b>название</b> для вашей карты:</string>
+    <string name="phone_number_description">Выберите <b>номер телефона</b>, с которого приходят сообщения по <b>данной карте</b>:</string>
+    <string name="select_message_description">Выберите сообщение с информацией о <b>изменении баланса</b>:</string>
+    <string name="select_balance_changing_description">Укажите область с информацией о <b>балансе</b> по данной карте:</string>
+    <string name="select_quantity_changing_description">Укажите область с информацией о <b>суме изменения баланса</b> по данной карте:</string>
+    <string name="add_card_patterns_description">Добавьте <b>все номера</b>, с которых Вам <b>приходят сообщения</b> с <b>изменениями баланса</b> по данной карте:</string>
+    <string name="select_message_type_description">Укажите <b>тип</b> данного сообщения:</string>
+    <string name="select_increment_checkword_description">Выберите <b>проверочное слово</b>, указывающее на то, что в данном сообщении происходит <b>зачисление</b> средств:</string>
+    <string name="select_decrement_checkword_description">Выберите <b>проверочное слово</b>, указывающее на то, что в данном сообщении происходит <b>снятие</b> средств:</string>
 
     <string name="invalid_value">Выбрано неверное значение</string>
 
     <string name="selected_value">Выбранное значение:</string>
     <string name="finish">Завершить</string>
+    <string name="plus">+</string>
+    <string name="increment">Зачисление</string>
+    <string name="decrement">Снятие</string>
 
 </resources>

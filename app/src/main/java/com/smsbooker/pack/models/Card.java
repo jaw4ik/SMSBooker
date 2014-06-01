@@ -1,52 +1,50 @@
 package com.smsbooker.pack.models;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.util.Map;
+import com.smsbooker.pack.TransactionsManager;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Yuriy on 06.05.2014.
  */
-public class Card {
+public class Card implements Parcelable {
     public int id;
     public String code;
     public String name;
-    public String phoneAddress;
     public float balance;
-    public Pattern pattern;
+    public ArrayList<CardPattern> cardPatterns;
+    public ArrayList<Transaction> transactions;
+
+    /*public float getBalance(){
+
+    }*/
 
     public Card() {
-        pattern = new Pattern();
     }
 
-    public Card (int id, String code, String name, String phoneAddress, float balance, String previousPattern, String nextPattern){
-        this();
+    public Card(String name, ArrayList<CardPattern> cardPatterns) {
+        this.name = name;
+        this.cardPatterns = cardPatterns;
+    }
 
+    public Card (int id, String code, String name, float balance){
         this.id = id;
         this.code = code;
         this.name = name;
-        this.phoneAddress = phoneAddress;
         this.balance = balance;
-
-        this.pattern.previousText = previousPattern;
-        this.pattern.nextText = nextPattern;
-    }
-
-    public Card (String name, String phoneAddress, float balance){
-        this(0, null, name, phoneAddress, balance, null, null);
     }
 
     public Card (Bundle bundle){
-        this();
-
         this.id = bundle.getInt("id");
         this.code = bundle.getString("code");
         this.name = bundle.getString("name");
-        this.phoneAddress = bundle.getString("phoneAddress");
         this.balance = bundle.getFloat("balance");
-
-        this.pattern.previousText = bundle.getString("previousPattern");
-        this.pattern.nextText = bundle.getString("nextPattern");
     }
 
     public Bundle toBundle(){
@@ -55,19 +53,50 @@ public class Card {
         bundle.putInt("id", this.id);
         bundle.putString("code", this.code);
         bundle.putString("name", this.name);
-        bundle.putString("phoneAddress", this.phoneAddress);
         bundle.putFloat("balance", this.balance);
-
-        if (this.pattern != null) {
-            bundle.putString("previousPattern", this.pattern.previousText);
-            bundle.putString("nextPattern", this.pattern.nextText);
-        }
 
         return bundle;
     }
 
-    public class Pattern{
-        public String previousText;
-        public String nextText;
+    public void createTransactions(Context context){
+        this.transactions = TransactionsManager.getTransactionsForCard(context, this);
     }
+
+    //Parcelable implementation
+    public Card(Parcel source) {
+        this.id = source.readInt();
+        this.code = source.readString();
+        this.name = source.readString();
+        this.balance = source.readFloat();
+
+        this.cardPatterns = new ArrayList<CardPattern>();
+        source.readList(this.cardPatterns, CardPattern.class.getClassLoader());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.code);
+        dest.writeString(this.name);
+        dest.writeFloat(this.balance);
+
+        dest.writeList(this.cardPatterns);
+    }
+
+    public static final Creator<Card> CREATOR = new Creator<Card>() {
+        @Override
+        public Card createFromParcel(Parcel source) {
+            return new Card(source);
+        }
+
+        @Override
+        public Card[] newArray(int size) {
+            return new Card[size];
+        }
+    };
 }

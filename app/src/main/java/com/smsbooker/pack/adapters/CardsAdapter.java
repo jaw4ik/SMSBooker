@@ -43,7 +43,6 @@ public class CardsAdapter extends ArrayAdapter<Card> {
         }
 
         ((TextView)cardView.findViewById(R.id.tvName)).setText(card.name);
-        ((TextView)cardView.findViewById(R.id.tvPhoneAddress)).setText(card.phoneAddress);
         ((TextView)cardView.findViewById(R.id.tvBalance)).setText(Float.toString(card.balance));
 
         return cardView;

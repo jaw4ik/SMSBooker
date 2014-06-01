@@ -1,10 +1,9 @@
 package com.smsbooker.pack;
 
 import com.smsbooker.pack.models.MessagePart;
+import com.smsbooker.pack.models.ValuePattern;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,15 +11,31 @@ import java.util.regex.Pattern;
  * Created by Yuriy on 12.05.2014.
  */
 
-public class MessagesParser {
+public class MessageParser {
 
     final String GET_NUMBERS_REGEX = "[+-]?\\d+([,.]\\d+)?";
     final String SPLIT_INTO_WORDS_REGEX = "[\\S\\s][\\w']*[\\S\\s]";
 
-    public ArrayList<MessagePart> parseMessage(String message){
-        Pattern pattern = Pattern.compile(GET_NUMBERS_REGEX);
+    private ArrayList<MessagePart> messageParts;
 
-        ArrayList<MessagePart> messageParts = new ArrayList<MessagePart>();
+    public MessageParser() {
+        messageParts = new ArrayList<MessagePart>();
+    }
+
+    public MessageParser(String message) {
+        this();
+
+        parse(message);
+    }
+
+    public ArrayList<MessagePart> getMessageParts(){
+        return messageParts;
+    }
+
+    public void parse(String message){
+        messageParts.clear();
+
+        Pattern pattern = Pattern.compile(GET_NUMBERS_REGEX);
 
         Matcher mt = pattern.matcher(message);
         int lastParsedIndex = -1;
@@ -37,8 +52,6 @@ public class MessagesParser {
 
             lastParsedIndex = mt.end();
         }
-
-        return messageParts;
     }
 
     private void splitAndCreateParts(String text, ArrayList<MessagePart> messageParts){
@@ -50,7 +63,7 @@ public class MessagesParser {
         }
     }
 
-    public String getPreviousPartText(ArrayList<MessagePart> messageParts, int partIndex){
+    private String getPreviousPartText(int partIndex){
         if (partIndex > 0){
             int currentPartIndex = partIndex - 1;
             do{
@@ -64,7 +77,7 @@ public class MessagesParser {
         return null;
     }
 
-    public String getNextPartText(ArrayList<MessagePart> messageParts, int partIndex){
+    private String getNextPartText(int partIndex){
         int messagePartsCount = messageParts.size();
         if (partIndex < messagePartsCount - 1){
             int currentPartIndex = partIndex + 1;
@@ -79,24 +92,31 @@ public class MessagesParser {
         return null;
     }
 
-    public String getPatternValue(String message, String previousText, String nextText){
-        ArrayList<MessagePart> messageParts = parseMessage(message);
+    public ValuePattern getPattern(int partIndex){
+        return new ValuePattern(getPreviousPartText(partIndex), getNextPartText(partIndex));
+    }
+
+    public String getPatternValue(ValuePattern valuePattern){
+        if (valuePattern == null){
+            return null;
+        }
+
         int messagePartsCount = messageParts.size();
         for (int index = 1; index < messagePartsCount; index++){
             MessagePart
                 previousPart = messageParts.get(index - 1),
                 currentPart = messageParts.get(index);
 
-            if (!previousPart.value.equalsIgnoreCase(previousText)){
+            if (!previousPart.value.equalsIgnoreCase(valuePattern.previousText)){
                 continue;
             }
 
-            if (index + 1 == messagePartsCount && nextText == null){
+            if (index + 1 == messagePartsCount && valuePattern.nextText == null){
                 return currentPart.value;
             }
 
             MessagePart nextPart = messageParts.get(index + 1);
-            if (currentPart.isNumber && nextPart.value.equalsIgnoreCase(nextText)){
+            if (currentPart.isNumber && nextPart.value.equalsIgnoreCase(valuePattern.nextText)){
                 return currentPart.value;
             }
         }

@@ -7,31 +7,32 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.smsbooker.pack.db.DBManager;
 import com.smsbooker.pack.models.Card;
+import com.smsbooker.pack.models.CardPattern;
+import com.smsbooker.pack.models.Transaction;
+import com.smsbooker.pack.models.ValuePattern;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by Yuriy on 06.05.2014.
  */
 public class CardsRepository {
 
-    final String TABLE_NAME = "cards";
+    public static final String TABLE_NAME = "cards";
 
-    private static class ColumnsNames{
+    public static class ColumnsNames{
         public static String id = "id";
         public static String code = "code";
         public static String name = "name";
-        public static String phoneAddress = "phoneAddress";
         public static String balance = "balance";
-        public static String previousPattern = "previousPattern";
-        public static String nextPattern = "nextPattern";
     }
 
     DBManager dbManager;
+    Context context;
 
     public CardsRepository(Context context){
-        dbManager = new DBManager(context);
+        this.dbManager = new DBManager(context);
+        this.context = context;
     }
 
     public ArrayList<Card> getAll(){
@@ -39,19 +40,24 @@ public class CardsRepository {
 
         ArrayList<Card> cards = new ArrayList<Card>();
 
+        CardPatternsRepository patternsRepository = new CardPatternsRepository(this.context);
+        TransactionsRepository transactionsRepository = new TransactionsRepository(this.context);
+
         try{
             Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
             if (cursor != null && cursor.moveToFirst()){
                 do{
-                    cards.add(new Card(
+                    Card card = new Card(
                         cursor.getInt(cursor.getColumnIndex(ColumnsNames.id)),
                         cursor.getString(cursor.getColumnIndex(ColumnsNames.code)),
                         cursor.getString(cursor.getColumnIndex(ColumnsNames.name)),
-                        cursor.getString(cursor.getColumnIndex(ColumnsNames.phoneAddress)),
-                        cursor.getFloat(cursor.getColumnIndex(ColumnsNames.balance)),
-                        cursor.getString(cursor.getColumnIndex(ColumnsNames.previousPattern)),
-                        cursor.getString(cursor.getColumnIndex(ColumnsNames.nextPattern))
-                    ));
+                        cursor.getFloat(cursor.getColumnIndex(ColumnsNames.balance))
+                    );
+
+                    card.cardPatterns = patternsRepository.getCardPatternsByCardId(card.id);
+                    card.transactions = transactionsRepository.getTransactionsByCardId(card.id);
+
+                    cards.add(card);
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -62,23 +68,52 @@ public class CardsRepository {
         return cards;
     }
 
-    public void add(Card card){
+    public Card add(Card card){
         SQLiteDatabase db = dbManager.getDB();
         ContentValues values = new ContentValues();
 
-        values.put("code", card.code);
-        values.put("name", card.name);
-        values.put("phoneAddress", card.phoneAddress);
-        values.put("balance", card.balance);
-        values.put("previousPattern", card.pattern.previousText);
-        values.put("nextPattern", card.pattern.nextText);
+        values.put(ColumnsNames.code, card.code);
+        values.put(ColumnsNames.name, card.name);
+        values.put(ColumnsNames.balance, card.balance);
 
-        db.insert(TABLE_NAME, null, values);
+        card.id = (int)db.insert(TABLE_NAME, null, values);
 
         dbManager.close();
+
+        if (card.cardPatterns != null && card.cardPatterns.size() > 0){
+            createCardPatterns(card);
+        }
+
+        if (card.transactions != null && card.transactions.size() > 0){
+            createTransactions(card);
+        }
+
+        return card;
+    }
+
+    private void createCardPatterns(Card card){
+        CardPatternsRepository patternsRepository = new CardPatternsRepository(this.context);
+        for (CardPattern pattern : card.cardPatterns){
+            pattern.cardId = card.id;
+            patternsRepository.add(pattern);
+        }
+    }
+
+    private void createTransactions(Card card){
+        TransactionsRepository transactionsRepository = new TransactionsRepository(context);
+        for (Transaction transaction : card.transactions){
+            transaction.cardId = card.id;
+            transactionsRepository.add(transaction);
+        }
     }
 
     public void delete(int id){
+        CardPatternsRepository patternsRepository = new CardPatternsRepository(this.context);
+        TransactionsRepository transactionsRepository = new TransactionsRepository(this.context);
+
+        patternsRepository.deleteAllByCardId(id);
+        transactionsRepository.deleteAllByCardId(id);
+
         SQLiteDatabase db = dbManager.getDB();
 
         db.delete(TABLE_NAME, ColumnsNames.id + " = ?", new String[] {Integer.toString(id)});
@@ -93,7 +128,6 @@ public class CardsRepository {
 
         values.put(ColumnsNames.code, card.code);
         values.put(ColumnsNames.name, card.name);
-        values.put(ColumnsNames.phoneAddress, card.phoneAddress);
         values.put(ColumnsNames.balance, card.balance);
 
         db.update(TABLE_NAME,values,ColumnsNames.id + " = ?", new String[] {Integer.toString(card.id)});

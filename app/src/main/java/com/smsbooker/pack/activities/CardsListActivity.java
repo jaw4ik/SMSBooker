@@ -1,11 +1,6 @@
 package com.smsbooker.pack.activities;
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -17,10 +12,14 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.smsbooker.pack.R;
-import com.smsbooker.pack.activities.addcard.AddCardFirstStepActivity;
+import com.smsbooker.pack.TransactionsManager;
 import com.smsbooker.pack.adapters.CardsAdapter;
 import com.smsbooker.pack.models.Card;
+import com.smsbooker.pack.models.CardPattern;
+import com.smsbooker.pack.models.Transaction;
+import com.smsbooker.pack.repositories.CardPatternsRepository;
 import com.smsbooker.pack.repositories.CardsRepository;
+import com.smsbooker.pack.repositories.TransactionsRepository;
 
 import java.util.ArrayList;
 
@@ -102,7 +101,7 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnAddCard:
-                Intent intent = new Intent(this, AddCardFirstStepActivity.class);
+                Intent intent = new Intent(this, AddCardActivity.class);
                 startActivityForResult(intent, 0);
                 break;
         }
@@ -118,10 +117,13 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
             return;
         }
 
-        addCard(new Card(data.getBundleExtra("card")));
+        Card card = data.getParcelableExtra(Card.class.getCanonicalName());
+        addCard(card);
     }
 
     private void addCard(Card card){
+        card.createTransactions(this);
+
         cardsRepository.add(card);
         cardsList.add(card);
 
@@ -130,6 +132,7 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
 
     private void deleteCard(int position){
         Card cardToDelete = cardsList.get(position);
+
         cardsRepository.delete(cardToDelete.id);
         cardsList.remove(position);
 
@@ -140,7 +143,7 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
         Card card = cardsList.get(position);
         cardsRepository.update(card);
         cardsList.remove(card);
-        cardsList.add(card);
+        cardsList.add(position, card);
 
         adapter.notifyDataSetChanged();
     }

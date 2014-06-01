@@ -1,4 +1,4 @@
-package com.smsbooker.pack.activities.addcard;
+package com.smsbooker.pack.activities.addCardPattern;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,28 +7,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.smsbooker.pack.MessagesParser;
+import com.smsbooker.pack.MessageParser;
 import com.smsbooker.pack.R;
-import com.smsbooker.pack.models.Card;
+import com.smsbooker.pack.models.CardPattern;
 import com.smsbooker.pack.models.MessagePart;
-import com.smsbooker.pack.viewcontrols.FlowLayout;
+import com.smsbooker.pack.models.ValuePattern;
+import com.smsbooker.pack.viewControls.FlowLayout;
 
 import java.util.ArrayList;
 
 /**
  * Created by Yuriy on 12.05.2014.
  */
-public class AddCardThirdStepActivity extends Activity implements View.OnClickListener {
+public class AddCardPatternBalanceStepActivity extends Activity implements View.OnClickListener {
 
     FlowLayout flParsedMessageBody;
     EditText etBalance;
     Button btnFinish;
 
-    MessagesParser parser = new MessagesParser();
+    MessageParser parser;
 
     ArrayList<MessagePart> messageParts;
     int selectedPartIndex = -1;
@@ -36,7 +36,7 @@ public class AddCardThirdStepActivity extends Activity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_card_third_step);
+        setContentView(R.layout.activity_add_card_pattern_balance_step);
 
         initControls();
         parseMessage();
@@ -48,28 +48,37 @@ public class AddCardThirdStepActivity extends Activity implements View.OnClickLi
             return;
         }
 
-        String messageBody = intent.getStringExtra("message_body");
-
-        messageParts = parser.parseMessage(messageBody);
+        parser = new MessageParser(intent.getStringExtra("message_body"));
+        messageParts = parser.getMessageParts();
 
         for (int i = 0; i < messageParts.size(); i++){
             MessagePart part = messageParts.get(i);
+
             TextView textView = new TextView(this);
             if (part.isNumber){
                 textView.setId(i);
-                textView.setOnClickListener(this);
-                setNumberButtonStyles(textView);
+                setClickableButtonStyles(textView);
             } else {
                 setTextStyles(textView);
             }
             textView.setText(part.value);
+
             flParsedMessageBody.addView(textView);
         }
     }
 
-    private void setNumberButtonStyles(TextView textView){
+    private void setClickableButtonStyles(TextView textView){
+        textView.setOnClickListener(this);
         textView.setTextAppearance(this, R.style.messagePartButton);
+        setUnselectedColor(textView);
+    }
+
+    private void setUnselectedColor(TextView textView){
         textView.setBackgroundColor(Color.parseColor("#ff0099cc"));
+    }
+
+    private void setSelectedColor(TextView textView){
+        textView.setBackgroundColor(Color.parseColor("#ff669900"));
     }
 
     private void setTextStyles(TextView textView){
@@ -106,9 +115,23 @@ public class AddCardThirdStepActivity extends Activity implements View.OnClickLi
         try{
             Float selectedValue = Float.parseFloat(selectedPart.value.replace(',', '.'));
             etBalance.setText(Float.toString(selectedValue));
+
+            setSelectedValueStyle(id);
         } catch (Exception e){
             Toast.makeText(this, R.string.invalid_value, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setSelectedValueStyle(int selectedViewId){
+        int partsCount = messageParts.size();
+        for (int i = 0; i < partsCount; i++){
+            TextView textView = (TextView)flParsedMessageBody.findViewById(i);
+            if (textView == null) continue;
+
+            setUnselectedColor(textView);
+        }
+
+        setSelectedColor((TextView)flParsedMessageBody.findViewById(selectedViewId));
     }
 
     private void finishCreating(){
@@ -117,12 +140,11 @@ public class AddCardThirdStepActivity extends Activity implements View.OnClickLi
             return;
         }
 
-        Card newCard = new Card();
-        newCard.pattern.previousText = parser.getPreviousPartText(messageParts, selectedPartIndex);
-        newCard.pattern.nextText = parser.getNextPartText(messageParts, selectedPartIndex);
+        CardPattern cardPattern = new CardPattern();
+        cardPattern.balanceValuePattern = parser.getPattern(selectedPartIndex);
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("card", newCard.toBundle());
+        resultIntent.putExtra(CardPattern.class.getCanonicalName(), cardPattern);
         setResult(RESULT_OK, resultIntent);
         finish();
     }

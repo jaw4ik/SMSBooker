@@ -6,12 +6,12 @@ import java.util.Map;
  * Created by Yuriy on 05.05.2014.
  */
 public class Message {
-    public long id = 0;
-    public long threadId = 0;
-    public String fromAddress = null;
-    public String messageBody = null;
-    public long timestamp = 0;
-    public boolean isRead = false;
+    public long id;
+    public long threadId;
+    public String fromAddress;
+    public String messageBody;
+    public long timestamp;
+    public boolean isRead;
 
     public Message(long id, long threadId, String fromAddress, String messageBody, long timestamp, boolean isRead){
         this.id = id;

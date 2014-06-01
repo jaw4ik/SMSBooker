@@ -1,4 +1,4 @@
-package com.smsbooker.pack.activities.addcard;
+package com.smsbooker.pack.activities.addCardPattern;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -9,9 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.smsbooker.pack.MessagesParser;
 import com.smsbooker.pack.R;
-import com.smsbooker.pack.models.Card;
 import com.smsbooker.pack.models.Message;
 import com.smsbooker.pack.repositories.MessagesRepository;
 
@@ -20,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Yuriy on 11.05.2014.
  */
-public class AddCardSecondStepActivity extends Activity implements AdapterView.OnItemClickListener {
+public class AddCardPatternMessageStepActivity extends Activity implements AdapterView.OnItemClickListener {
 
     ListView tvMessages;
 
@@ -30,7 +28,7 @@ public class AddCardSecondStepActivity extends Activity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_card_second_step);
+        setContentView(R.layout.activity_add_card_pattern_message_step);
 
         initControls();
         fillMessagesList();
@@ -79,7 +77,7 @@ public class AddCardSecondStepActivity extends Activity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, AddCardThirdStepActivity.class);
+        Intent intent = new Intent(this, AddCardPatternTypeStepActivity.class);
         intent.putExtra("message_body", messagesList.get(position).messageBody);
 
         Bundle animationBundle = ActivityOptions.makeCustomAnimation(this, R.anim.slide_left_in, R.anim.slide_left_out).toBundle();
@@ -91,21 +89,6 @@ public class AddCardSecondStepActivity extends Activity implements AdapterView.O
         if (resultCode != RESULT_OK){
             return;
         }
-
-        Card card = new Card(data.getBundleExtra("card"));
-
-        MessagesParser parser = new MessagesParser();
-
-        String balanceValue;
-        for (Message message : messagesList){
-            balanceValue = parser.getPatternValue(message.messageBody, card.pattern.previousText, card.pattern.nextText);
-            if (balanceValue != null){
-                card.balance = Float.parseFloat(balanceValue.replace(',', '.'));
-                break;
-            }
-        }
-
-        data.putExtra("card", card.toBundle());
 
         setResult(RESULT_OK, data);
         finish();
