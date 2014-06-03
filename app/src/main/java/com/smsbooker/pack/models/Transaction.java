@@ -3,7 +3,7 @@ package com.smsbooker.pack.models;
 /**
  * Created by Yuriy on 26.05.2014.
  */
-public class Transaction implements Comparable {
+public class Transaction implements Comparable<Transaction> {
     public int id;
     public int cardId;
     public Type type;
@@ -32,7 +32,17 @@ public class Transaction implements Comparable {
 
     //Comparable implementation
     @Override
-    public int compareTo(Object another) {
-        return (int)(this.createdOn - ((Transaction)another).createdOn);
+    public int compareTo(Transaction another) {
+        final int BEFORE = -1;
+        final int EQUAL = 0;
+        final int AFTER = 1;
+
+        if (this.createdOn < another.createdOn){
+            return BEFORE;
+        } else if (this.createdOn > another.createdOn){
+            return AFTER;
+        } else {
+            return EQUAL;
+        }
     }
 }

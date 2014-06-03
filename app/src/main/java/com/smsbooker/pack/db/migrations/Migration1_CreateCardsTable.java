@@ -15,7 +15,6 @@ public class Migration1_CreateCardsTable implements IMigration {
         db.execSQL("CREATE TABLE " + CardsRepository.TABLE_NAME + " (" +
                 CardsRepository.ColumnsNames.id + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 CardsRepository.ColumnsNames.code + " TEXT," +
-                CardsRepository.ColumnsNames.name + " TEXT," +
-                CardsRepository.ColumnsNames.balance + " FLOAT )");
+                CardsRepository.ColumnsNames.name + " TEXT )");
     }
 }

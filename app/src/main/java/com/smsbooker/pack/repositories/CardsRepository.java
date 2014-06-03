@@ -24,7 +24,6 @@ public class CardsRepository {
         public static String id = "id";
         public static String code = "code";
         public static String name = "name";
-        public static String balance = "balance";
     }
 
     DBManager dbManager;
@@ -50,8 +49,7 @@ public class CardsRepository {
                     Card card = new Card(
                         cursor.getInt(cursor.getColumnIndex(ColumnsNames.id)),
                         cursor.getString(cursor.getColumnIndex(ColumnsNames.code)),
-                        cursor.getString(cursor.getColumnIndex(ColumnsNames.name)),
-                        cursor.getFloat(cursor.getColumnIndex(ColumnsNames.balance))
+                        cursor.getString(cursor.getColumnIndex(ColumnsNames.name))
                     );
 
                     card.cardPatterns = patternsRepository.getCardPatternsByCardId(card.id);
@@ -74,7 +72,6 @@ public class CardsRepository {
 
         values.put(ColumnsNames.code, card.code);
         values.put(ColumnsNames.name, card.name);
-        values.put(ColumnsNames.balance, card.balance);
 
         card.id = (int)db.insert(TABLE_NAME, null, values);
 
@@ -128,7 +125,6 @@ public class CardsRepository {
 
         values.put(ColumnsNames.code, card.code);
         values.put(ColumnsNames.name, card.name);
-        values.put(ColumnsNames.balance, card.balance);
 
         db.update(TABLE_NAME,values,ColumnsNames.id + " = ?", new String[] {Integer.toString(card.id)});
 

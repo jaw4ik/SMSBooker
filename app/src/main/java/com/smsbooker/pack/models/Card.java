@@ -9,6 +9,7 @@ import com.smsbooker.pack.TransactionsManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by Yuriy on 06.05.2014.
@@ -17,15 +18,16 @@ public class Card implements Parcelable {
     public int id;
     public String code;
     public String name;
-    public float balance;
+
     public ArrayList<CardPattern> cardPatterns;
     public ArrayList<Transaction> transactions;
 
-    /*public float getBalance(){
-
-    }*/
-
-    public Card() {
+    public float getBalance(){
+        int transactionsCount = transactions.size();
+        if (transactionsCount > 0){
+            return transactions.get(transactionsCount - 1).balance;
+        }
+        return 0;
     }
 
     public Card(String name, ArrayList<CardPattern> cardPatterns) {
@@ -33,29 +35,10 @@ public class Card implements Parcelable {
         this.cardPatterns = cardPatterns;
     }
 
-    public Card (int id, String code, String name, float balance){
+    public Card (int id, String code, String name){
         this.id = id;
         this.code = code;
         this.name = name;
-        this.balance = balance;
-    }
-
-    public Card (Bundle bundle){
-        this.id = bundle.getInt("id");
-        this.code = bundle.getString("code");
-        this.name = bundle.getString("name");
-        this.balance = bundle.getFloat("balance");
-    }
-
-    public Bundle toBundle(){
-        Bundle bundle = new Bundle();
-
-        bundle.putInt("id", this.id);
-        bundle.putString("code", this.code);
-        bundle.putString("name", this.name);
-        bundle.putFloat("balance", this.balance);
-
-        return bundle;
     }
 
     public void createTransactions(Context context){
@@ -67,7 +50,6 @@ public class Card implements Parcelable {
         this.id = source.readInt();
         this.code = source.readString();
         this.name = source.readString();
-        this.balance = source.readFloat();
 
         this.cardPatterns = new ArrayList<CardPattern>();
         source.readList(this.cardPatterns, CardPattern.class.getClassLoader());
@@ -83,7 +65,6 @@ public class Card implements Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.code);
         dest.writeString(this.name);
-        dest.writeFloat(this.balance);
 
         dest.writeList(this.cardPatterns);
     }
