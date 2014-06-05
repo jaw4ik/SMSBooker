@@ -10,24 +10,33 @@
     android:paddingTop="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_horizontal_margin">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/sixth_step"
-        android:id="@+id/textView" />
+        android:layout_weight="0">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/select_balance_changing_description"
-        android:id="@+id/textView2"
-        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/sixth_step"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/select_balance_changing_description"
+            android:id="@+id/textView2"
+            android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="300dp">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <com.smsbooker.pack.viewControls.FlowLayout
             android:id="@+id/flParsedMessageBody"
@@ -40,34 +49,35 @@
 
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:phoneNumber="false"
-            android:text="@string/selected_value"
-            android:layout_below="@+id/etBalance"
-            android:layout_alignBaseline="@+id/etBalance" />
+            android:layout_weight="0"
+            android:text="@string/selected_value" />
 
         <EditText
             android:id="@+id/etBalance"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textView3"
+            android:layout_weight="1"
             android:editable="false"
             android:enabled="false" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:text="@string/finish"
         android:id="@+id/btnFinish"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
 </LinearLayout>

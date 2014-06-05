@@ -49,6 +49,13 @@ public class CardPatternsRepository {
         return getAllFromCursor(cursor);
     }
 
+    public ArrayList<CardPattern> getCardPatternsByAddress(String address){
+        SQLiteDatabase db = dbManager.getDB();
+        Cursor cursor = db.query(TABLE_NAME, null, ColumnsNames.address + " = ?", new String[]{ address }, null, null, null);
+
+        return getAllFromCursor(cursor);
+    }
+
     private ArrayList<CardPattern> getAllFromCursor(Cursor cursor){
         ArrayList<CardPattern> cardPatterns = new ArrayList<CardPattern>();
 

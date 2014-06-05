@@ -54,6 +54,11 @@
             android:label="@string/title_activity_add_card_pattern" >
         </activity>
 
+        <activity
+            android:name=".activities.TransactionsListActivity"
+            android:label="@string/title_activity_transactions_list" >
+        </activity>
+
         <service
             android:name="com.smsbooker.pack.services.InboxMessagesHandleService"
             android:enabled="true"

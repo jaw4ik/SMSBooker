@@ -12,16 +12,17 @@
     <ListView android:id="@+id/lvCards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="10">
+        android:layout_weight="1">
 
     </ListView>
 
     <Button android:id="@+id/btnAddCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:background="@drawable/hbutton"
         android:text="@string/add_card"
         android:textColor="#ffffffff"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
 </LinearLayout>

@@ -35,6 +35,8 @@ public class MessageParser {
     public void parse(String message){
         messageParts.clear();
 
+        message = message.replace("\n", " ");
+
         Pattern pattern = Pattern.compile(GET_NUMBERS_REGEX);
 
         Matcher mt = pattern.matcher(message);

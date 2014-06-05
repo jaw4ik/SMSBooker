@@ -53,6 +53,9 @@ public class Card implements Parcelable {
 
         this.cardPatterns = new ArrayList<CardPattern>();
         source.readList(this.cardPatterns, CardPattern.class.getClassLoader());
+
+        this.transactions = new ArrayList<Transaction>();
+        source.readList(this.transactions, Transaction.class.getClassLoader());
     }
 
     @Override
@@ -67,6 +70,7 @@ public class Card implements Parcelable {
         dest.writeString(this.name);
 
         dest.writeList(this.cardPatterns);
+        dest.writeList(this.transactions);
     }
 
     public static final Creator<Card> CREATOR = new Creator<Card>() {

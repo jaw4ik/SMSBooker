@@ -12,18 +12,13 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.smsbooker.pack.R;
-import com.smsbooker.pack.TransactionsManager;
 import com.smsbooker.pack.adapters.CardsAdapter;
 import com.smsbooker.pack.models.Card;
-import com.smsbooker.pack.models.CardPattern;
-import com.smsbooker.pack.models.Transaction;
-import com.smsbooker.pack.repositories.CardPatternsRepository;
 import com.smsbooker.pack.repositories.CardsRepository;
-import com.smsbooker.pack.repositories.TransactionsRepository;
 
 import java.util.ArrayList;
 
-public class CardsListActivity extends ActionBarActivity implements View.OnClickListener {
+public class CardsListActivity extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     final int CM_DELETE_CARD = 1;
     final int CM_EDIT_CARD = 2;
@@ -50,6 +45,7 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
         cardsList = cardsRepository.getAll();
         adapter = new CardsAdapter(this, cardsList);
         lvCards.setAdapter(adapter);
+        lvCards.setOnItemClickListener(this);
 
         registerForContextMenu(lvCards);
     }
@@ -105,6 +101,16 @@ public class CardsListActivity extends ActionBarActivity implements View.OnClick
                 startActivityForResult(intent, 0);
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Card card = cardsList.get(position);
+
+        Intent intent = new Intent(this, TransactionsListActivity.class);
+        intent.putExtra(Card.class.getCanonicalName(), card);
+
+        startActivity(intent);
     }
 
     @Override

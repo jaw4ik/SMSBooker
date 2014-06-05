@@ -10,22 +10,31 @@
     android:paddingTop="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_horizontal_margin">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/fifth_step" />
+        android:layout_weight="0">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/select_quantity_changing_description"
-        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/fifth_step" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/select_quantity_changing_description"
+            android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="300dp">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <com.smsbooker.pack.viewControls.FlowLayout
             android:id="@+id/flParsedMessageBody"
@@ -38,34 +47,35 @@
 
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:phoneNumber="false"
             android:text="@string/selected_value"
-            android:layout_below="@+id/etQuantity"
-            android:layout_alignBaseline="@+id/etQuantity" />
+            android:layout_weight="0"/>
 
         <EditText
             android:id="@+id/etQuantity"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textView3"
             android:editable="false"
-            android:enabled="false" />
+            android:enabled="false"
+            android:layout_weight="1"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/continue_str"
         android:id="@+id/btnContinue"
-        android:layout_gravity="center_horizontal" />
+        android:layout_weight="0"
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
 </LinearLayout>

@@ -37,19 +37,37 @@ public class CardsRepository {
     public ArrayList<Card> getAll(){
         SQLiteDatabase db = dbManager.getDB();
 
+        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+
+        return getAllFromCursor(cursor);
+    }
+
+    public Card getCardById(int id){
+        SQLiteDatabase db = dbManager.getDB();
+
+        Cursor cursor = db.query(TABLE_NAME, null, ColumnsNames.id + " = ?", new String[]{ Integer.toString(id) }, null, null, null);
+
+        ArrayList<Card> cards = getAllFromCursor(cursor);
+        if (cards.size() == 0){
+            return null;
+        }
+
+        return cards.get(0);
+    }
+
+    private ArrayList<Card> getAllFromCursor(Cursor cursor){
         ArrayList<Card> cards = new ArrayList<Card>();
 
         CardPatternsRepository patternsRepository = new CardPatternsRepository(this.context);
         TransactionsRepository transactionsRepository = new TransactionsRepository(this.context);
 
         try{
-            Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
             if (cursor != null && cursor.moveToFirst()){
                 do{
                     Card card = new Card(
-                        cursor.getInt(cursor.getColumnIndex(ColumnsNames.id)),
-                        cursor.getString(cursor.getColumnIndex(ColumnsNames.code)),
-                        cursor.getString(cursor.getColumnIndex(ColumnsNames.name))
+                            cursor.getInt(cursor.getColumnIndex(ColumnsNames.id)),
+                            cursor.getString(cursor.getColumnIndex(ColumnsNames.code)),
+                            cursor.getString(cursor.getColumnIndex(ColumnsNames.name))
                     );
 
                     card.cardPatterns = patternsRepository.getCardPatternsByCardId(card.id);

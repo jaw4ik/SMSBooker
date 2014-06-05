@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -10,26 +11,35 @@
     android:paddingTop="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_horizontal_margin">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/third_step"
-        android:id="@+id/textView" />
+        android:layout_weight="0">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/select_message_type_description"
-        android:id="@+id/textView2"
-        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/third_step"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/select_message_type_description"
+            android:id="@+id/textView2"
+            android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="270dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/tvMessageBody"
@@ -41,7 +51,8 @@
     <RadioGroup
         android:id="@+id/rgMessageType"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
 
         <RadioButton
             android:id="@+id/rbIncrement"
@@ -62,6 +73,6 @@
         android:layout_height="wrap_content"
         android:text="@string/continue_str"
         android:id="@+id/btnContinue"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginTop="@dimen/activity_horizontal_margin" />
 
 </LinearLayout>

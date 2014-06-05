@@ -13,6 +13,11 @@ public class Message {
     public long timestamp;
     public boolean isRead;
 
+    public Message(String messageBody, long timestamp) {
+        this.messageBody = messageBody;
+        this.timestamp = timestamp;
+    }
+
     public Message(long id, long threadId, String fromAddress, String messageBody, long timestamp, boolean isRead){
         this.id = id;
         this.threadId = threadId;

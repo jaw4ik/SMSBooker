@@ -7,6 +7,7 @@
     <string name="title_activity_cards_list">Список карт</string>
     <string name="title_activity_add_card">Добаление новой карты</string>
     <string name="title_activity_add_card_pattern">Добаление нового шаблона сообщений</string>
+    <string name="title_activity_transactions_list">Список транзакций</string>
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -53,5 +54,11 @@
     <string name="plus">+</string>
     <string name="increment">Зачисление</string>
     <string name="decrement">Снятие</string>
+
+    <string name="notification_title">Карта <b>\"%s\"</b></string>
+    <string name="notification_text_increment" formatted="false">Зачислено %.2fгрн. Баланс: %.2fгрн.</string>
+    <string name="notification_text_decrement" formatted="false">Списано %.2fгрн. Баланс: %.2fгрн.</string>
+    <string name="transactions_for_card">Транзакции по карте:</string>
+    <string name="grivna">грн.</string>
 
 </resources>

@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.smsbooker.pack.R;
+import com.smsbooker.pack.TransactionsManager;
 import com.smsbooker.pack.activities.CardsListActivity;
+import com.smsbooker.pack.models.Card;
+import com.smsbooker.pack.models.Transaction;
+import com.smsbooker.pack.repositories.CardsRepository;
+import com.smsbooker.pack.repositories.TransactionsRepository;
 
 public class InboxMessagesHandleService extends Service {
-
-    final int NOTIFICATION_ID = 1;
 
     public InboxMessagesHandleService() {
     }
@@ -21,14 +24,6 @@ public class InboxMessagesHandleService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        /*Notification notification = new Notification(R.drawable.ic_launcher, "SMS Booker. Сервис запущен!", System.currentTimeMillis());
-
-        Intent intent = new Intent(this, CardsListActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        notification.setLatestEventInfo(this, "SMS Booker", "SMS Booker. Сервис запущен!", pendingIntent);
-        startForeground(NOTIFICATION_ID, notification);*/
     }
 
     @Override
@@ -36,9 +31,34 @@ public class InboxMessagesHandleService extends Service {
         String smsAddress = intent.getStringExtra("sms_address");
         String smsBody = intent.getStringExtra("sms_body");
 
-        showNotification(smsAddress, smsBody);
+        Transaction transaction = TransactionsManager.getTransaction(this, smsAddress, smsBody);
+        if (transaction == null){
+            return START_NOT_STICKY;
+        }
 
-        return START_REDELIVER_INTENT;
+        TransactionsRepository transactionsRepository = new TransactionsRepository(this);
+        transactionsRepository.add(transaction);
+
+        CardsRepository cardsRepository = new CardsRepository(this);
+        Card card = cardsRepository.getCardById(transaction.cardId);
+
+        if (card == null){
+            return START_STICKY;
+        }
+
+        int resourceId;
+        if (transaction.type == Transaction.Type.increment){
+            resourceId = R.string.notification_text_increment;
+        } else {
+            resourceId = R.string.notification_text_decrement;
+        }
+
+        String notificationTitle = String.format(getResources().getString(R.string.notification_title), card.name);
+        String notificationText = String.format(getResources().getString(resourceId), transaction.value, transaction.balance);
+
+        showNotification(notificationTitle, notificationText);
+
+        return START_STICKY;
     }
 
     @Override
@@ -46,17 +66,17 @@ public class InboxMessagesHandleService extends Service {
         return null;
     }
 
-    private void showNotification(String address, String text) {
+    private void showNotification(String title, String text) {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, CardsListActivity.class), 0);
         Context context = getApplicationContext();
         Notification.Builder builder = new Notification.Builder(context)
-                .setContentTitle(address)
+                .setContentTitle(title)
                 .setContentText(text)
                 .setContentIntent(contentIntent)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setAutoCancel(true);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = builder.getNotification();
+        Notification notification = builder.build();
         notificationManager.notify(R.drawable.ic_launcher, notification);
     }
 }

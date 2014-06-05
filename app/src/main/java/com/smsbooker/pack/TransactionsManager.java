@@ -7,10 +7,14 @@ import com.smsbooker.pack.models.CardPattern;
 import com.smsbooker.pack.models.Message;
 import com.smsbooker.pack.models.MessagePart;
 import com.smsbooker.pack.models.Transaction;
+import com.smsbooker.pack.repositories.CardPatternsRepository;
 import com.smsbooker.pack.repositories.MessagesRepository;
 
+import java.security.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  * Created by Yuriy on 01.06.2014.
@@ -36,6 +40,29 @@ public class TransactionsManager {
         Collections.sort(transactionsList);
 
         return transactionsList;
+    }
+
+    public static Transaction getTransaction(Context context, String address, String messageBody){
+        CardPatternsRepository cardPatternsRepository = new CardPatternsRepository(context);
+        ArrayList<CardPattern> cardPatterns = cardPatternsRepository.getCardPatternsByAddress(address);
+
+        if (cardPatterns.size() <= 0){
+            return null;
+        }
+
+        Message message = new Message(messageBody, Calendar.getInstance().getTime().getTime());
+
+        for (CardPattern pattern : cardPatterns){
+            Transaction transaction = getTransaction(pattern, message);
+
+            if (transaction != null){
+                transaction.cardId = pattern.cardId;
+
+                return transaction;
+            }
+        }
+
+        return null;
     }
 
     private static Transaction getTransaction(CardPattern cardPattern, Message message){
