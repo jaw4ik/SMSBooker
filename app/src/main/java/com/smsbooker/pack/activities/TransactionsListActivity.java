@@ -64,10 +64,10 @@ public class TransactionsListActivity extends Activity {
             Map<String, String> groupItem = new HashMap<String, String>();
 
             String strValue = transaction.type == Transaction.Type.increment ? "+" : "-";
-            strValue += Float.toString(transaction.value);
+            strValue += String.format("%.2f", transaction.value);
 
             groupItem.put("value", strValue);
-            groupItem.put("balance", Float.toString(transaction.balance));
+            groupItem.put("balance", String.format("%.2f", transaction.balance));
             groupItem.put("dateTime", dateFormatter.format(new Date(transaction.createdOn)));
 
             groupsData.add(groupItem);

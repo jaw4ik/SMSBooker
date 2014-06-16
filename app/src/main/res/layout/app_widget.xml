@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/widget_list"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:divider="#aaaaaa"
+            android:dividerHeight="1dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp" />
+
+    </LinearLayout>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/btnOpenApplication"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="@string/open_app"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnSettings"
+        android:background="@drawable/widget_button"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="2dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/btnSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="@string/settings"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/widget_button"
+        android:layout_marginBottom="2dp" />
+
+</RelativeLayout>

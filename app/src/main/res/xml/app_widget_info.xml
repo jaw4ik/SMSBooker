@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="250dp"
+    android:minHeight="40dp"
+    android:updatePeriodMillis="0"
+    android:previewImage="@drawable/example_appwidget_preview"
+    android:initialLayout="@layout/app_widget"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    android:configure="com.smsbooker.pack.widget.WidgetConfigureActivity">
+</appwidget-provider>
+
+    <!--android:initialKeyguardLayout="@layout/app_widget"
+    android:autoAdvanceViewId="@+id/appWidget"
+    -->

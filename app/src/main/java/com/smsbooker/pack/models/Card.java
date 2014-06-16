@@ -84,4 +84,9 @@ public class Card implements Parcelable {
             return new Card[size];
         }
     };
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }

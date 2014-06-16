@@ -25,37 +25,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AddCardActivity"
+            android:name="com.smsbooker.pack.activities.AddCardActivity"
             android:label="@string/title_activity_add_card" >
         </activity>
-
         <activity
-            android:name=".activities.addCardPattern.AddCardPatternAddressStepActivity"
+            android:name="com.smsbooker.pack.activities.addCardPattern.AddCardPatternAddressStepActivity"
             android:label="@string/title_activity_add_card_pattern" >
         </activity>
         <activity
-            android:name=".activities.addCardPattern.AddCardPatternMessageStepActivity"
+            android:name="com.smsbooker.pack.activities.addCardPattern.AddCardPatternMessageStepActivity"
             android:label="@string/title_activity_add_card_pattern" >
         </activity>
         <activity
-            android:name=".activities.addCardPattern.AddCardPatternTypeStepActivity"
+            android:name="com.smsbooker.pack.activities.addCardPattern.AddCardPatternTypeStepActivity"
             android:label="@string/title_activity_add_card_pattern" >
         </activity>
         <activity
-            android:name=".activities.addCardPattern.AddCardPatternCheckwordStepActivity"
+            android:name="com.smsbooker.pack.activities.addCardPattern.AddCardPatternCheckwordStepActivity"
             android:label="@string/title_activity_add_card_pattern" >
         </activity>
         <activity
-            android:name=".activities.addCardPattern.AddCardPatternQuantityStepActivity"
+            android:name="com.smsbooker.pack.activities.addCardPattern.AddCardPatternQuantityStepActivity"
             android:label="@string/title_activity_add_card_pattern" >
         </activity>
         <activity
-            android:name=".activities.addCardPattern.AddCardPatternBalanceStepActivity"
+            android:name="com.smsbooker.pack.activities.addCardPattern.AddCardPatternBalanceStepActivity"
             android:label="@string/title_activity_add_card_pattern" >
         </activity>
-
         <activity
-            android:name=".activities.TransactionsListActivity"
+            android:name="com.smsbooker.pack.activities.TransactionsListActivity"
             android:label="@string/title_activity_transactions_list" >
         </activity>
 
@@ -70,15 +68,34 @@
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".receivers.SMSReceiver">
-            <intent-filter android:priority="100">
+        <receiver android:name="com.smsbooker.pack.receivers.SMSReceiver" >
+            <intent-filter android:priority="100" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".widget.WidgetConfigureActivity" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".widget.WidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>
 

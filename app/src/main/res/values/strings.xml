@@ -2,16 +2,13 @@
 <resources>
 
     <string name="app_name">SMS Booker</string>
-
     <string name="title_activity_home">SMS Booker</string>
     <string name="title_activity_cards_list">Список карт</string>
     <string name="title_activity_add_card">Добаление новой карты</string>
     <string name="title_activity_add_card_pattern">Добаление нового шаблона сообщений</string>
     <string name="title_activity_transactions_list">Список транзакций</string>
-
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-
     <string name="action_settings">Настройки</string>
     <string name="add_card">Добавить карту</string>
     <string name="choose">Выбрать</string>
@@ -20,14 +17,12 @@
     <string name="delete_card">Удалить карту</string>
     <string name="edit_card">Редактировать карту</string>
     <string name="delete_pattern">Удалить шаблон</string>
-
     <string name="title_card_validation_msg">Название карты не может быть пустым</string>
     <string name="empty_card_patterns_validation_msg">Нужно создать хотя бы один шаблон сообщений</string>
     <string name="no_messages_validation_msg">По указаному номеру не найдено сообщений</string>
     <string name="invalid_value_selected_validation_msg">Необходимо указать область с информацией о балансе по данной карте</string>
     <string name="no_value_checked_validation_msg">Необходимо выбрать тип карты</string>
     <string name="no_checkword_selected_validation_msg">Необходимо выбрать проверочное слово</string>
-
     <string name="balance_title">Баланс:</string>
     <string name="continue_str">Продолжить -></string>
     <string name="first_step">Шаг 1</string>
@@ -36,29 +31,31 @@
     <string name="fourth_step">Шаг 4</string>
     <string name="fifth_step">Шаг 5</string>
     <string name="sixth_step">Шаг 6</string>
-
-    <string name="card_title_description">Придумайте <b>название</b> для вашей карты:</string>
+    <string name="choose_icon_description"><b>1.</b> Выберите <b>иконку</b>:</string>
+    <string name="card_title_description"><b>2.</b> Придумайте <b>название</b> для вашей карты:</string>
+    <string name="add_card_patterns_description"><b>3.</b> Добавьте <b>все номера</b>, с которых Вам <b>приходят сообщения</b> с <b>изменениями баланса</b> по данной карте:</string>
     <string name="phone_number_description">Выберите <b>номер телефона</b>, с которого приходят сообщения по <b>данной карте</b>:</string>
     <string name="select_message_description">Выберите сообщение с информацией о <b>изменении баланса</b>:</string>
     <string name="select_balance_changing_description">Укажите область с информацией о <b>балансе</b> по данной карте:</string>
     <string name="select_quantity_changing_description">Укажите область с информацией о <b>суме изменения баланса</b> по данной карте:</string>
-    <string name="add_card_patterns_description">Добавьте <b>все номера</b>, с которых Вам <b>приходят сообщения</b> с <b>изменениями баланса</b> по данной карте:</string>
     <string name="select_message_type_description">Укажите <b>тип</b> данного сообщения:</string>
     <string name="select_increment_checkword_description">Выберите <b>проверочное слово</b>, указывающее на то, что в данном сообщении происходит <b>зачисление</b> средств:</string>
     <string name="select_decrement_checkword_description">Выберите <b>проверочное слово</b>, указывающее на то, что в данном сообщении происходит <b>снятие</b> средств:</string>
-
     <string name="invalid_value">Выбрано неверное значение</string>
-
     <string name="selected_value">Выбранное значение:</string>
     <string name="finish">Завершить</string>
     <string name="plus">+</string>
     <string name="increment">Зачисление</string>
     <string name="decrement">Снятие</string>
-
     <string name="notification_title">Карта <b>\"%s\"</b></string>
     <string name="notification_text_increment" formatted="false">Зачислено %.2fгрн. Баланс: %.2fгрн.</string>
     <string name="notification_text_decrement" formatted="false">Списано %.2fгрн. Баланс: %.2fгрн.</string>
     <string name="transactions_for_card">Транзакции по карте:</string>
     <string name="grivna">грн.</string>
+    <string name="widget_configure">Настройка виджета</string>
+    <string name="add_widget">Добавить виджет</string>
+    <string name="open_app">В приложение</string>
+    <string name="widget_configure_description"><b>Включите те карты</b>, которые желаете <b>видеть на виджете</b>:</string>
+    <string name="settings">Настройки</string>
 
 </resources>
