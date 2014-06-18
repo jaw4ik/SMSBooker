@@ -31,9 +31,8 @@
     <string name="fourth_step">Шаг 4</string>
     <string name="fifth_step">Шаг 5</string>
     <string name="sixth_step">Шаг 6</string>
-    <string name="choose_icon_description"><b>1.</b> Выберите <b>иконку</b>:</string>
-    <string name="card_title_description"><b>2.</b> Придумайте <b>название</b> для вашей карты:</string>
-    <string name="add_card_patterns_description"><b>3.</b> Добавьте <b>все номера</b>, с которых Вам <b>приходят сообщения</b> с <b>изменениями баланса</b> по данной карте:</string>
+    <string name="card_title_description"><b>1.</b> Придумайте <b>название</b> для вашей карты:</string>
+    <string name="add_card_patterns_description"><b>2.</b> Добавьте <b>все номера</b>, с которых Вам <b>приходят сообщения</b> с <b>изменениями баланса</b> по данной карте:</string>
     <string name="phone_number_description">Выберите <b>номер телефона</b>, с которого приходят сообщения по <b>данной карте</b>:</string>
     <string name="select_message_description">Выберите сообщение с информацией о <b>изменении баланса</b>:</string>
     <string name="select_balance_changing_description">Укажите область с информацией о <b>балансе</b> по данной карте:</string>
